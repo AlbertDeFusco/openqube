@@ -37,6 +37,7 @@ GaussianFchk::GaussianFchk(const QString &filename, GaussianSet* basis)
   qDebug() << "File" << filename << "opened.";
 
   // Process the formatted checkpoint and extract all the information we need
+  qDebug() << m_in->atEnd();
   while (!m_in->atEnd()) {
     processLine();
   }
@@ -55,8 +56,9 @@ void GaussianFchk::processLine()
 {
   // First truncate the line, remove trailing white space and check
   QString line = m_in->readLine();
-  if (line.isEmpty())
+  if (line.isEmpty()) {
     return;
+  }
   QString key = line;
   key.resize(42);
   key = key.trimmed();
